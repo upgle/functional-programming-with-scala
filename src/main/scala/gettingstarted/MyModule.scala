@@ -16,6 +16,7 @@ object MyModule {
     println(formatAbs(-42))
     println(formatFactorial(7))
     println(formatResult("Fibonacci", 2, fib))
+
   }
 
   def factorial(n: Int): Int = {
@@ -48,4 +49,30 @@ object MyModule {
     msg.format(name, n, f(n))
   }
 
+}
+
+object MonomorphicFunction {
+
+  def findFirst(ss: Array[String], key: String) : Int = {
+    @annotation.tailrec
+    def loop(n: Int): Int =
+      if (n >= ss.length) - 1
+      else if (ss(n) == key) n
+      else loop(n+1)
+
+    loop(0) // 배열의 첫 요소부터 시작
+  }
+}
+
+object PolymorphicFunction {
+
+  def findFirst[A](as: Array[A], p: A => Boolean) : Int = {
+    @annotation.tailrec
+    def loop(n: Int): Int =
+      if (n >= as.length) - 1
+      else if (p(as(n))) n
+      else loop(n+1)
+
+    loop(0) // 배열의 첫 요소부터 시작
+  }
 }
